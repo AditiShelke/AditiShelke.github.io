@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aditi Shelke — Data Science & Applied AI</title>
+<meta name="description" content="MS Data Science. Production AI systems, forecasting models, agentic RAG pipelines. arXiv-published research endorsed by Stanford.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1419;
+    --ink-soft: #2a2f36;
+    --ink-mute: #5a6068;
+    --paper: #fafaf7;
+    --paper-warm: #f3f0e8;
+    --rule: #d9d4c5;
+    --rule-soft: #ebe7da;
+    --teal: #1c4a4c;
+    --teal-bright: #2d7878;
+    --accent: #c44829;
+    --serif: 'Fraunces', 'Times New Roman', serif;
+    --sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── Layout ─────────────────────────────────── */
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ── Navigation ─────────────────────────────── */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(250, 250, 247, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule-soft);
+    z-index: 50;
+  }
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+  .nav-mark {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-mark em { font-style: italic; color: var(--teal); }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-links a {
+    color: var(--ink-mute);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+
+  /* ── Hero ───────────────────────────────────── */
+  .hero {
+    padding: 96px 0 80px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--teal);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .hero-eyebrow::before {
+    content: "";
+    width: 32px;
+    height: 1px;
+    background: var(--teal);
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 920px;
+    margin-bottom: 36px;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--teal);
+    font-weight: 400;
+  }
+  .hero-sub {
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin-bottom: 44px;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px 40px;
+    align-items: baseline;
+    font-size: 14px;
+  }
+  .hero-meta a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .hero-meta a:hover {
+    color: var(--teal);
+    border-color: var(--teal);
+  }
+  .hero-meta span {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-mute);
+  }
+
+  /* ── Section structure ─────────────────────── */
+  section {
+    padding: 88px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    margin-bottom: 56px;
+    align-items: baseline;
+  }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--teal);
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(28px, 3.5vw, 40px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 720px;
+  }
+
+  /* ── About ─────────────────────────────────── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+  }
+  .about-aside { font-size: 13px; line-height: 1.65; }
+  .about-aside dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-mute);
+    margin-top: 18px;
+  }
+  .about-aside dt:first-child { margin-top: 0; }
+  .about-aside dd { color: var(--ink-soft); margin-top: 4px; }
+  .about-body {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 680px;
+    font-weight: 400;
+  }
+  .about-body p + p { margin-top: 1.2em; }
+  .about-body strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── Featured (FlightSense banner) ─────────── */
+  .featured {
+    padding: 96px 0;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+  }
+  .featured .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .featured-left h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #7da9aa;
+    margin-bottom: 24px;
+  }
+  .featured-left h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .featured-left h2 em { font-style: italic; color: #7da9aa; }
+  .featured-left p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #cdcec8;
+    margin-bottom: 32px;
+    max-width: 480px;
+  }
+  .featured-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--paper);
+    text-decoration: none;
+    border-bottom: 1px solid #7da9aa;
+    padding-bottom: 4px;
+    transition: gap 0.2s;
+  }
+  .featured-cta:hover { gap: 14px; }
+
+  .featured-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid #2a3439;
+    border-left: 1px solid #2a3439;
+  }
+  .stat {
+    padding: 28px 24px;
+    border-right: 1px solid #2a3439;
+    border-bottom: 1px solid #2a3439;
+  }
+  .stat-num {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--paper);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .stat-num em { font-style: italic; color: #7da9aa; }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888a83;
+    line-height: 1.4;
+  }
+
+  /* ── Work / Projects ───────────────────────── */
+  .work-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    padding: 48px 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .work-item:first-of-type { border-top: none; padding-top: 0; }
+  .work-meta { font-size: 13px; }
+  .work-meta .work-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+  .work-meta .work-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 18px;
+  }
+  .work-tags span {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    padding: 3px 9px;
+    background: var(--paper-warm);
+    border-radius: 2px;
+  }
+  .work-title {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  .work-context {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .work-body {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 640px;
+  }
+  .work-body p + p { margin-top: 14px; }
+  .work-results {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 36px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .work-results div {
+    font-size: 13px;
+  }
+  .work-results dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+  .work-results dd {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .work-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    text-decoration: none;
+    border-bottom: 1px solid var(--teal);
+    padding-bottom: 2px;
+    transition: gap 0.2s;
+  }
+  .work-link:hover { gap: 12px; }
+
+  /* ── Experience ────────────────────────────── */
+  .exp-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+  }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    padding: 40px 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .exp-item:first-of-type { border-top: none; padding-top: 0; }
+  .exp-left h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .exp-left .exp-role {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .exp-left .exp-dates {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-mute);
+  }
+  .exp-right {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+  .exp-right ul { list-style: none; padding: 0; }
+  .exp-right li {
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 12px;
+  }
+  .exp-right li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--teal);
+    font-family: var(--mono);
+  }
+
+  /* ── Writing / Press ───────────────────────── */
+  .press-item {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 32px;
+    padding: 24px 0;
+    align-items: baseline;
+    border-top: 1px solid var(--rule-soft);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+  .press-item:first-of-type { border-top: none; }
+  .press-item:hover { background: var(--paper-warm); }
+  .press-date {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-mute);
+  }
+  .press-title {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .press-source {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── Skills & Interests ────────────────────── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+  .skills-block h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--teal);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .skills-block dl {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 14px 24px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .skills-block dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-top: 3px;
+  }
+  .skills-block dd {
+    color: var(--ink-soft);
+  }
+  .interests-list {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .interests-list p {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .interests-list p:last-child { border-bottom: none; }
+  .interests-list em {
+    font-style: italic;
+    color: var(--teal);
+  }
+
+  /* ── Contact ───────────────────────────────── */
+  .contact {
+    padding: 120px 0;
+    background: var(--paper-warm);
+    border-bottom: none;
+  }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .contact h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 640px;
+    margin-bottom: 32px;
+  }
+  .contact h2 em { font-style: italic; color: var(--teal); }
+  .contact-channels {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 32px;
+    max-width: 560px;
+  }
+  .contact-channels a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    text-decoration: none;
+    transition: padding 0.2s, border-color 0.2s;
+  }
+  .contact-channels a:hover {
+    padding-left: 8px;
+    border-color: var(--teal);
+  }
+  .contact-channels .ch-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .contact-channels .ch-value {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  /* ── Footer ────────────────────────────────── */
+  footer {
+    padding: 32px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── Responsive ────────────────────────────── */
+  @media (max-width: 900px) {
+    .section-head, .about-grid, .work-item, .exp-grid, .contact-inner, .skills-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .skills-block dl { grid-template-columns: 110px 1fr; gap: 10px 16px; }
+    .featured .container { grid-template-columns: 1fr; gap: 48px; }
+    .exp-item { grid-template-columns: 1fr; gap: 18px; }
+    .nav-links { gap: 18px; font-size: 13px; }
+    .container, .nav-inner { padding-left: 24px; padding-right: 24px; }
+    .hero { padding: 64px 0 56px; }
+    section { padding: 64px 0; }
+    .featured { padding: 72px 0; }
+    .contact { padding: 80px 0; }
+    .press-item { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="nav-mark">Aditi <em>Shelke</em></a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#press">Writing</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div id="top"></div>
+
+<!-- ── HERO ─────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Data Science · Applied AI · MS Stevens</div>
+    <h1>
+      Data scientist working at the intersection of <em>applied ML</em>, forecasting, and production AI systems.
+    </h1>
+    <p class="hero-sub">
+      My experience spans production forecasting models, healthcare machine learning, and retrieval-augmented generation (RAG) systems. At Compass Group, I work with operational and transactional data to support forecasting, inventory planning, and business decision-making across 10+ locations.
+    </p>
+    <div class="hero-meta">
+      <a href="mailto:aditishelke333@gmail.com">aditishelke333@gmail.com</a>
+      <a href="https://www.linkedin.com/in/aditi-shelke-89b5b41a4/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/AditiShelke" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ────────────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <aside class="about-aside">
+        <dl>
+          <dt>Education</dt>
+          <dd>MS Data Science<br>Stevens Institute, 2026</dd>
+          <dt>Most Recent</dt>
+          <dd>Data Analyst<br>Compass Group USA</dd>
+          <dt>Research</dt>
+          <dd>FlightSense<br>arXiv preprint, 2025</dd>
+          <dt>Looking For</dt>
+          <dd>Data Science<br>ML Engineering<br>Applied AI</dd>
+          <dt>Authorization</dt>
+          <dd>OPT + STEM extension<br>3 years, no sponsorship needed</dd>
+        </dl>
+      </aside>
+      <div class="about-body">
+        <p>
+          I've found that model performance is only part of the challenge. Deployment, validation, monitoring, and stakeholder adoption are often equally important &mdash; and that's the side of the work I gravitate to.
+        </p>
+        <p>
+          Over the past two years I've built forecasting systems that real procurement teams act on, RAG pipelines that fact-check their own outputs, and MLOps infrastructure that survives contact with production. What I care about is the gap between a model that runs and a recommendation that lands &mdash; the judgment, the testing, and the trust-building that turn an analysis into a decision.
+        </p>
+        <p>
+          I'm driven by problems where being right matters and where careful work compounds. I'm equally happy in a notebook, a stakeholder review, or a production debugging session.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED (FlightSense) ──────────────── -->
+<section class="featured">
+  <div class="container">
+    <div class="featured-left">
+      <h3>Featured Research · arXiv 2025</h3>
+      <h2>FlightSense: real-time flight delay prediction via <em>rotation-chain propagation</em> features.</h2>
+      <p>
+        An end-to-end MLOps platform deployed on AWS, surpassing the published academic baseline (Zhou 2025) using feature engineering alone &mdash; with an agentic Bedrock Nova Micro assistant answering natural-language delay queries against live NOAA weather data.
+      </p>
+      <a href="https://doi.org/10.48550/arXiv.2605.07364" target="_blank" rel="noopener" class="featured-cta">Read the paper on arXiv →</a>
+    </div>
+    <div class="featured-stats">
+      <div class="stat">
+        <div class="stat-num">0.731 → <em>0.879</em></div>
+        <div class="stat-label">AUC Improvement<br>over 7M+ records</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">+<em>1.4%</em></div>
+        <div class="stat-label">Above published<br>academic baseline</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><em>91%</em></div>
+        <div class="stat-label">Factual grounding<br>vs real airport conditions</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">$<em>6.65</em></div>
+        <div class="stat-label">Total AWS<br>infrastructure cost</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WORK ─────────────────────────────────── -->
+<section id="work">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">§ 02 — Selected Work</span>
+      <h2 class="section-title">Production systems across forecasting, agentic AI, and fairness-aware ML.</h2>
+    </div>
+
+    <!-- IPO Multi-Agent RAG -->
+    <article class="work-item">
+      <div class="work-meta">
+        <div class="work-num">/ 01</div>
+        <div class="work-context">Agentic AI · Finance</div>
+        <div class="work-tags">
+          <span>LangChain</span>
+          <span>Qdrant</span>
+          <span>RAG</span>
+          <span>Multi-Agent</span>
+          <span>Streamlit</span>
+        </div>
+      </div>
+      <div class="work-content">
+        <h3 class="work-title">IPO Prospectus Analyzer</h3>
+        <div class="work-body">
+          <p>An 8-agent RAG system that ingests IPO S-1 filings across seven companies (Snowflake, Coinbase, DoorDash, Arm, Reddit, Klaviyo, Instacart) and answers natural-language questions about risk factors, financials, and comparative positioning.</p>
+          <p>Architecture includes a dedicated <em style="font-family:var(--serif);color:var(--ink)">critic agent</em> that fact-checks every claim against source chunks before output, along with confidence scoring, intent detection, and query rewriting layered around the retrieval call.</p>
+        </div>
+        <div class="work-results">
+          <div><dt>Recall @ 5</dt><dd>98%</dd></div>
+          <div><dt>Risk Classification</dt><dd>100%</dd></div>
+          <div><dt>Chunks Indexed</dt><dd>18,937</dd></div>
+          <div><dt>Agent Failures</dt><dd>0 / 58</dd></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Compass Group -->
+    <article class="work-item">
+      <div class="work-meta">
+        <div class="work-num">/ 02</div>
+        <div class="work-context">Forecasting · Real-World Impact</div>
+        <div class="work-tags">
+          <span>ARIMA</span>
+          <span>Prophet</span>
+          <span>Power BI</span>
+          <span>GPT-4o</span>
+          <span>Python</span>
+        </div>
+      </div>
+      <div class="work-content">
+        <h3 class="work-title">Compass Group — Operational AI</h3>
+        <div class="work-body">
+          <p>Built an ensemble ARIMA-Prophet forecasting model across 200+ SKUs, engineering features for academic calendars, weather impact, and campus event signals. Dynamic 60/40 weighting between models.</p>
+          <p>The model improved demand accuracy by 23%, with outputs feeding directly into weekly procurement decisions presented to regional leadership across three consecutive QBRs. Dashboards now run as the standard reporting tool across locations.</p>
+        </div>
+        <div class="work-results">
+          <div><dt>Annual Savings</dt><dd>$34K</dd></div>
+          <div><dt>Food Waste Cut</dt><dd>18%</dd></div>
+          <div><dt>Reporting Time</dt><dd>5h → 10s</dd></div>
+          <div><dt>QBR Citations</dt><dd>3 quarters</dd></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Fair Healthcare -->
+    <article class="work-item">
+      <div class="work-meta">
+        <div class="work-num">/ 03</div>
+        <div class="work-context">Fairness · Healthcare ML</div>
+        <div class="work-tags">
+          <span>IBM AIF360</span>
+          <span>SMOTE</span>
+          <span>Python</span>
+          <span>Bias Mitigation</span>
+        </div>
+      </div>
+      <div class="work-content">
+        <h3 class="work-title">Fair Healthcare ML Model</h3>
+        <div class="work-body">
+          <p>A heart disease risk classifier that actively corrects for racial and gender underdiagnosis. SMOTE against a 3:1 class imbalance, IBM AIF360 reweighing across demographic groups.</p>
+          <p>The work focuses on a known failure mode in healthcare ML: models that perform well in aggregate but underdiagnose minority demographics. Bias mitigation was applied across race and gender groups while preserving overall accuracy.</p>
+        </div>
+        <div class="work-results">
+          <div><dt>Minority Recall</dt><dd>0.72 → 0.81</dd></div>
+          <div><dt>Overall Accuracy</dt><dd>84%</dd></div>
+          <div><dt>SPD Reduction</dt><dd>−0.16 → −0.08</dd></div>
+          <div><dt>EOD Reduction</dt><dd>−0.19 → −0.07</dd></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ──────────────────────────── -->
+<section id="experience">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">§ 03 — Experience</span>
+      <h2 class="section-title">Roles where I've built and shipped.</h2>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-role">Data Analyst</div>
+        <h3>The Compass Group USA</h3>
+        <div class="exp-dates">Sep 2024 — May 2026 · Hoboken, NJ</div>
+      </div>
+      <div class="exp-right">
+        <ul>
+          <li>Designed forecasting and automation systems across 12 dining locations serving 1,000+ daily transactions, embedded with operations, finance, and supply chain teams to translate ambiguous business questions into defensible analytical outputs</li>
+          <li>Built an executive Power BI dashboard suite tracking 15 KPIs that drove $18K+ in quarterly cost reductions and was cited in three consecutive QBRs to regional leadership</li>
+          <li>Authored runbooks documenting KPI definitions, pipeline error handling, and model backtesting to enable team continuity and faster onboarding</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-role">ML Intern · AICTE Program</div>
+        <h3>AWS AI-ML Internship</h3>
+        <div class="exp-dates">May 2023 — Oct 2023</div>
+      </div>
+      <div class="exp-right">
+        <ul>
+          <li>Built end-to-end XGBoost pipelines on AWS SageMaker for diagnostic classification at 92% accuracy with statistical validation</li>
+          <li>Deployed an Amazon Lex NLP chatbot automating query classification and routing across high-volume support workflows</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-role">Scholarship Recipient</div>
+        <h3>AWS × Intel × Udacity AI/ML</h3>
+        <div class="exp-dates">Oct 2023 — Jan 2024</div>
+      </div>
+      <div class="exp-right">
+        <ul>
+          <li>Selected from a competitive pool for the AI Programming with Python Nanodegree</li>
+          <li>Built and benchmarked CNN-based image classifiers (ResNet, AlexNet, VGG) using transfer learning across accuracy, runtime, and classification metrics</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WRITING / PRESS ─────────────────────── -->
+<section id="press">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">§ 04 — Publications & Press</span>
+      <h2 class="section-title">Research, talks, and things worth reading.</h2>
+    </div>
+
+    <div>
+      <a href="https://doi.org/10.48550/arXiv.2605.07364" target="_blank" rel="noopener" class="press-item">
+        <div class="press-date">Oct 2025</div>
+        <div>
+          <div class="press-title">FlightSense: End-to-End MLOps Platform for Real-Time Flight Delay Prediction</div>
+        </div>
+        <div class="press-source">arXiv preprint</div>
+      </a>
+      <a href="#" class="press-item">
+        <div class="press-date">2023</div>
+        <div>
+          <div class="press-title">Suspicious Activity Detection Using DNN</div>
+        </div>
+        <div class="press-source">Co-author · DYPCET</div>
+      </a>
+      <a href="#" class="press-item">
+        <div class="press-date">2022</div>
+        <div>
+          <div class="press-title">Social Media Application Using Java and Firebase</div>
+        </div>
+        <div class="press-source">Co-author · DYPCET</div>
+      </a>
+      <a href="#" class="press-item">
+        <div class="press-date">Nov 2024</div>
+        <div>
+          <div class="press-title">Teaching RAG to a Deep Learning class &mdash; Best Presentation, CS583</div>
+        </div>
+        <div class="press-source">Stevens Institute</div>
+      </a>
+      <a href="https://medium.com/" target="_blank" rel="noopener" class="press-item">
+        <div class="press-date">Jul 2023</div>
+        <div>
+          <div class="press-title">Big Mart Sales Prediction with Linear Regression</div>
+        </div>
+        <div class="press-source">Medium</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS & INTERESTS ───────────────────── -->
+<section id="skills">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">§ 05 — Toolkit & Interests</span>
+      <h2 class="section-title">What I build with, and what I think about.</h2>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skills-block">
+        <h3>Toolkit</h3>
+        <dl>
+          <dt>ML &amp; Stats</dt>
+          <dd>scikit-learn, XGBoost, PyTorch, TensorFlow, ARIMA/Prophet forecasting, statistical modeling, regression, feature engineering, fairness-aware ML (AIF360)</dd>
+
+          <dt>Languages</dt>
+          <dd>Python, SQL (PostgreSQL, MySQL), R, C++</dd>
+
+          <dt>Data &amp; Analytics</dt>
+          <dd>pandas, NumPy, Snowflake, BigQuery, ETL, data modeling</dd>
+
+          <dt>GenAI / LLMs</dt>
+          <dd>LangChain, RAG pipelines, multi-agent architectures, vector databases (Qdrant, Pinecone), Hugging Face, prompt engineering</dd>
+
+          <dt>Cloud / MLOps</dt>
+          <dd>AWS (SageMaker, S3, EC2, RDS, Lambda, Bedrock), Docker, Git, FastAPI, Streamlit, CI/CD</dd>
+
+          <dt>Visualization</dt>
+          <dd>Power BI, Tableau, Excel (Advanced), ggplot</dd>
+
+          <dt>Certifications</dt>
+          <dd>AWS Cloud Foundations, AWS Cloud Architecting, Python for Data Science &amp; AI (Coursera), Udacity AWS AI &amp; ML Scholar</dd>
+        </dl>
+      </div>
+
+      <div class="skills-block">
+        <h3>Research Interests</h3>
+        <div class="interests-list">
+          <p>Generative AI &amp; Large Language Models</p>
+          <p>Agentic AI &amp; Multi-Agent Systems</p>
+          <p>Retrieval-Augmented Generation (RAG)</p>
+          <p>MLOps &amp; Production ML Systems</p>
+          <p>Time-Series Forecasting</p>
+          <p>Fairness-Aware Machine Learning</p>
+        </div>
+
+        <h3 style="margin-top: 40px;">Outside of Work</h3>
+        <div class="interests-list">
+          <p>Reading</p>
+          <p>Piano</p>
+          <p>Badminton</p>
+          <p>Traveling</p>
+          <p>Math puzzles</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ─────────────────────────────── -->
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <span class="section-label">§ 06 — Get in Touch</span>
+      <div>
+        <h2>Always happy to talk about <em>data, ML, or interesting problems</em>.</h2>
+        <div class="contact-channels">
+          <a href="mailto:aditishelke333@gmail.com">
+            <span class="ch-label">Email</span>
+            <span class="ch-value">aditishelke333@gmail.com</span>
+          </a>
+          <a href="https://www.linkedin.com/in/aditi-shelke-89b5b41a4/" target="_blank" rel="noopener">
+            <span class="ch-label">LinkedIn</span>
+            <span class="ch-value">/in/aditi-shelke</span>
+          </a>
+          <a href="https://github.com/AditiShelke" target="_blank" rel="noopener">
+            <span class="ch-label">GitHub</span>
+            <span class="ch-value">/AditiShelke</span>
+          </a>
+          <a href="#" target="_blank" rel="noopener">
+            <span class="ch-label">Resume</span>
+            <span class="ch-value">Download PDF →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Aditi Shelke · Built with care, hosted on GitHub Pages
+</footer>
+
+</body>
+</html>
